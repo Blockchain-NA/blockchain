@@ -88,7 +88,10 @@ class Blockchain:
     keys = RSA.generate(2048)
     pub_key = keys.publickey().export_key()
     priv_key = keys.export_key()
+    #file_out = open("private.pem", "wb")
+    #file_out.write(priv_key)
     print(pub_key.decode('ASCII'))
+    print(priv_key.decode('ASCII'))
     return pub_key.decode('ASCII')
     
 
