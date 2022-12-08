@@ -74,6 +74,10 @@ class Blockchain:
     self.chain = [self.add_genesis()] 
     self.pending = [self]
 
+    #a set of keys of transacters; used to easily find if a generated key is a duplicate
+    #feel free to change the name of this property as you see fit
+    self.transacters = set()
+
   #This function returns the first block (genesis block) in the chain (hence the function is only going to be used once)
   def add_genesis(self):
     return Block([], d.datetime.now())
@@ -85,24 +89,20 @@ class Blockchain:
       block.previous = self.chain[-1].hash
       self.chain.append(block)
 
+      #add all the new transacters to the set of transacters
+      for tran in block.transactions:
+        self.transacters.update((tran.sender, tran.receiver))
+
   #to be explained
   def newTransaction(self, sender, receiver, amt, senderKey):
     senderKeyByte = senderKey.encode('ASCII')
 
   def generateKeys(self):
-    # Makes sure the RSA key is not a duplicate of one used in the chain already
-    
-    flag = False
-    while flag == False:
+    # The while loop makes sure the RSA key is not a duplicate of one used in the chain already
+    while !(pub_key in self.transacters or priv_key in self.transacters):
       keys = RSA.generate(2048)
       pub_key = keys.publickey().export_key()
       priv_key = keys.export_key()
-      flag = True
-      for block in self.chain:
-        print(block)
-        for tran in block.transactions:
-          if tran.sender == pub_key or tran.receiver == pub_key:
-            flag = False
 
     file_out = open("private.pem", "wb")
     file_out.write(priv_key)
