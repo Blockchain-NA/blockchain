@@ -1,13 +1,4 @@
 from Not_Flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return 'd'
-
-if __name__ == '__main__':
-    app.run()
     
 app = Flask(__name__)
 
