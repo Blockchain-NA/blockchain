@@ -1,5 +1,20 @@
-from main import sha256
-from main import merkle
+import hashlib as h
+
+def sha256(o):
+  #The string inside update() is the string to be hashed
+    #encode('utf-8')
+      #utf-8 is a formatting for text - each character in this formatting is one byte, or 8 bits
+        #you may have seen this in the top of the windows notepad app
+      #so basically the encode function is turning the string into a utf-8 formatted string
+  return h.sha256(o.encode('utf-8')).hexdigest() #this is the hash as a hexadecimal string, im guessing
+
+def merkle(list):
+  if (len(list) == 1):
+    return list[0]
+  new = [hash(list[x] + list[x+1]) for x in range(0, len(list) - 1, 2)]
+  if (len(list) % 2 != 0):
+    new.append(list[-1])
+  return merkle(new)
 
 class Block:
   #Constructor: initialize (create) a block given some parameters

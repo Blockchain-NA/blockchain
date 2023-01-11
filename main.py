@@ -1,26 +1,12 @@
-import hashlib as h
 import datetime as d
 from Crypto.PublicKey import RSA
 from blockchain import Blockchain
 from block import Block
 from transaction import Transaction
 
-def sha256(o):
-  #The string inside update() is the string to be hashed
-    #encode('utf-8')
-      #utf-8 is a formatting for text - each character in this formatting is one byte, or 8 bits
-        #you may have seen this in the top of the windows notepad app
-      #so basically the encode function is turning the string into a utf-8 formatted string
-  return h.sha256(o.encode('utf-8')).hexdigest() #this is the hash as a hexadecimal string, im guessing
 
 # Assuming the inputs ARE already hashed
-def merkle(list):
-  if (len(list) == 1):
-    return list[0]
-  new = [hash(list[x] + list[x+1]) for x in range(0, len(list) - 1, 2)]
-  if (len(list) % 2 != 0):
-    new.append(list[-1])
-  return merkle(new)
+
 
 '''
 Basic terminology
